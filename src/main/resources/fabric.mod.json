@@ -3,7 +3,7 @@
   "id": "head_in_the_clouds",
   "version": "${version}",
   "name": "Head_in_the_clouds",
-  "description": "Makes it so there is no rain when being over cloud level",
+  "description": "Make it not rain over the cloud level",
   "authors": [
     "DaFuqs"
   ],

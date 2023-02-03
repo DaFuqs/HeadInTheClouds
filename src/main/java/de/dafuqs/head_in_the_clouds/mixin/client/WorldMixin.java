@@ -14,7 +14,7 @@ public abstract class WorldMixin {
 
     @Inject(method = "getRainGradient(F)F", at = @At("RETURN"), cancellable = true)
     public void clouds$getRainGradient(float delta, CallbackInfoReturnable<Float> cir) {
-        if(isClient) {
+        if(isClient && cir.getReturnValue() > 0) {
             cir.setReturnValue(HeadInTheClouds.getRainGradient((World) (Object) this, cir.getReturnValue()));
         }
     }
