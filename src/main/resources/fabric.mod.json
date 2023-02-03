@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "head_in_the_clouds",
+  "version": "${version}",
+  "name": "Head_in_the_clouds",
+  "description": "Makes it so there is no rain when being over cloud level",
+  "authors": [
+    "DaFuqs"
+  ],
+  "contact": {
+    "website": "https://github.com/DaFuqs/HeadInTheClouds",
+    "repo": "https://github.com/DaFuqs/HeadInTheClouds"
+  },
+  "license": "MIT",
+  "icon": "assets/head_in_the_clouds/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "de.dafuqs.head_in_the_clouds.client.HeadInTheCloudsClient"
+    ],
+    "main": [
+      "de.dafuqs.head_in_the_clouds.HeadInTheClouds"
+    ],
+    "modmenu": [
+      "de.dafuqs.head_in_the_clouds.config.ModMenuConfig"
+    ]
+  },
+  "mixins": [
+    "head_in_the_clouds.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "minecraft": ">=1.19.2",
+    "cloth-config": "*"
+  }
+}
