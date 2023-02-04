@@ -15,7 +15,7 @@ public abstract class WorldMixin {
 
     @Inject(method = "hasRain(Lnet/minecraft/util/math/BlockPos;)Z", at = @At("HEAD"), cancellable = true)
     public void clouds$hasRain(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        if (cir.getReturnValue() && pos.getY() > HeadInTheClouds.getCloudHeight((World)(Object) this)) {
+        if (pos.getY() > HeadInTheClouds.getCloudHeight((World)(Object) this)) {
             cir.setReturnValue(false);
         }
     }
