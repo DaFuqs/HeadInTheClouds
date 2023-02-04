@@ -11,7 +11,7 @@
     "website": "https://github.com/DaFuqs/HeadInTheClouds",
     "repo": "https://github.com/DaFuqs/HeadInTheClouds"
   },
-  "license": "MIT",
+  "license": "LGPLv3",
   "icon": "assets/head_in_the_clouds/icon.png",
   "environment": "*",
   "entrypoints": {
