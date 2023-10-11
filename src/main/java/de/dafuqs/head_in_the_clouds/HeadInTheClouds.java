@@ -29,7 +29,10 @@ public class HeadInTheClouds implements ModInitializer {
 
     @Environment(EnvType.CLIENT)
     private static float getCloudHeightClient(World world) {
-        return ((ClientWorld) world).getDimensionEffects().getCloudsHeight();
+        if(world instanceof ClientWorld clientWorld) {
+            return clientWorld.getDimensionEffects().getCloudsHeight();
+        }
+        return world.getBottomY();
     }
 
     private static final float ADDITIONAL_CLOUD_HEIGHT = 3.0F;
