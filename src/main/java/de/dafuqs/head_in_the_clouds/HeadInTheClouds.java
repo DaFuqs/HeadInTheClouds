@@ -9,6 +9,7 @@ import net.minecraft.client.world.*;
 import net.minecraft.world.*;
 
 public class HeadInTheClouds implements ModInitializer {
+    
     // since cloud height information is only present on clients, servers sadly have to get it added via config
     public static Config CONFIG;
 
