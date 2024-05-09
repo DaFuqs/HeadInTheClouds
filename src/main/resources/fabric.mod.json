@@ -29,7 +29,7 @@
     "head_in_the_clouds.mixins.json"
   ],
   "depends": {
-    "minecraft": ">=1.20.1",
+    "minecraft": ">=1.20.5",
     "fabricloader": "*",
     "cloth-config": "*"
   }
