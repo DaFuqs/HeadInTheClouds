@@ -20,9 +20,6 @@
     ],
     "main": [
       "de.dafuqs.head_in_the_clouds.HeadInTheClouds"
-    ],
-    "modmenu": [
-      "de.dafuqs.head_in_the_clouds.config.ModMenuConfig"
     ]
   },
   "mixins": [
