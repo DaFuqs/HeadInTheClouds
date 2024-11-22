@@ -23,7 +23,7 @@ public class HeadInTheClouds implements ModInitializer {
             return getCloudHeightClient(world);
         } else {
             String regKey = world.getRegistryKey().getValue().toString();
-            return CONFIG.WorldCloudHeights.getOrDefault(regKey, Float.MAX_VALUE);
+            return CONFIG.ServerWorldCloudHeights.getOrDefault(regKey, Float.MAX_VALUE);
         }
     }
 
