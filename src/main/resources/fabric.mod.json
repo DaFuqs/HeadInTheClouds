@@ -15,9 +15,6 @@
   "icon": "assets/head_in_the_clouds/icon.png",
   "environment": "*",
   "entrypoints": {
-    "client": [
-      "de.dafuqs.head_in_the_clouds.client.HeadInTheCloudsClient"
-    ],
     "main": [
       "de.dafuqs.head_in_the_clouds.HeadInTheClouds"
     ]
