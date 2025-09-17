@@ -1,9 +1,10 @@
 package de.dafuqs.head_in_the_clouds.api;
 
 import de.dafuqs.head_in_the_clouds.*;
-import net.fabricmc.api.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
+
+import java.util.*;
 
 public class HeadInTheCloudsAPI {
 
@@ -14,12 +15,11 @@ public class HeadInTheCloudsAPI {
 	 * Above cloud level, the return value will always be 0.0 (no rain)
 	 *
 	 * @param world     The world
-	 * @param tickDelta The current tick delta
+	 * @param tickProgress The current tick delta
 	 * @return the rain gradient from 0.0-1.0
 	 */
-	@Environment(EnvType.CLIENT)
-	public float getRainGradient(World world, float tickDelta) {
-		return HeadInTheClouds.getRainGradient(world, world.getRainGradient(tickDelta));
+	public static float getRainGradient(World world, float tickProgress) {
+		return HeadInTheClouds.getRainGradient(world, world.getRainGradient(tickProgress));
 	}
 
 	/**
@@ -33,8 +33,9 @@ public class HeadInTheCloudsAPI {
 	 * @param pos   The position to test
 	 * @return If it can possibly rain/snow at the given pos
 	 */
-	public boolean canRainAtPos(World world, BlockPos pos) {
-		return pos.getY() > HeadInTheClouds.getCloudHeight(world);
+	public static boolean allowRainAtPos(World world, BlockPos pos) {
+		Optional<Integer> cloudY = HeadInTheClouds.getCloudHeight(world);
+		return cloudY.isPresent() && cloudY.get() > pos.getY();
 	}
 
 }

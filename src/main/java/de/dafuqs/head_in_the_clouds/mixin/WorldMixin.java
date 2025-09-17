@@ -1,9 +1,6 @@
 package de.dafuqs.head_in_the_clouds.mixin;
 
-import de.dafuqs.head_in_the_clouds.*;
-import net.fabricmc.api.*;
-import net.minecraft.client.*;
-import net.minecraft.client.world.*;
+import de.dafuqs.head_in_the_clouds.api.*;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.spongepowered.asm.mixin.*;
@@ -15,7 +12,7 @@ public abstract class WorldMixin {
 
     @Inject(method = "hasRain(Lnet/minecraft/util/math/BlockPos;)Z", at = @At("HEAD"), cancellable = true)
     public void clouds$hasRain(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        if (pos.getY() > HeadInTheClouds.getCloudHeight((World)(Object) this)) {
+        if(!HeadInTheCloudsAPI.allowRainAtPos((World)(Object) this, pos)) {
             cir.setReturnValue(false);
         }
     }

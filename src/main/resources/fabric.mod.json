@@ -28,7 +28,6 @@
   "depends": {
     "minecraft": ">=${minecraft_version}",
     "fabricloader": ">=${loader_version}",
-    "java": ">=21",
-    "cloth-config": "*"
+    "java": ">=21"
   }
 }
