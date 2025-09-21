@@ -1,7 +1,6 @@
 package de.dafuqs.head_in_the_clouds;
 
 import net.fabricmc.api.*;
-import net.minecraft.client.*;
 import net.minecraft.world.*;
 
 import java.util.*;
@@ -21,25 +20,23 @@ public class HeadInTheClouds implements ModInitializer {
         return world.getDimension().cloudHeight();
     }
     
-    public static float getRainGradient(World world, float original) {
-        if (MinecraftClient.getInstance().cameraEntity != null) {
-            double playerY = MinecraftClient.getInstance().cameraEntity.getPos().y;
-            Optional<Integer> cloudY = HeadInTheClouds.getCloudHeight(world);
-            if(cloudY.isEmpty()) {
-                return original;
-            }
-            
-            double y = cloudY.get() + ADDITIONAL_CLOUD_HEIGHT;
-            if (playerY < y - GRADIENT_HEIGHT) {
-                // normal
-            } else if (playerY < y) {
-                return (float) ((y - playerY) * INVERTED_GRADIENT_HEIGHT) * original;
-            } else {
-                return 0.0F;
-            }
-
+    public static float getRainGradient(World world, double y, float original) {
+        Optional<Integer> cloudY = HeadInTheClouds.getCloudHeight(world);
+        if(cloudY.isEmpty()) {
+            return original;
         }
-        return original;
+        
+        double maxY = cloudY.get() + ADDITIONAL_CLOUD_HEIGHT;
+        if (y < maxY - GRADIENT_HEIGHT) {
+            // no override here
+            return original;
+        } else if (y < maxY) {
+            // exactly in the clouds
+            return (float) ((maxY - y) * INVERTED_GRADIENT_HEIGHT) * original;
+        } else {
+            // we're above clouds
+            return 0.0F;
+        }
     }
 
 }

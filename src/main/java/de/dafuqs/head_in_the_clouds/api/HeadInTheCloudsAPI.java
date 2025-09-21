@@ -11,15 +11,16 @@ public class HeadInTheCloudsAPI {
 	/**
 	 * Returns the current rain/snow gradient that is rendered in-world
 	 * This is the vanilla rain gradient (0.0 for clear sky, 1.0 if fully raining)
-	 * diminished when the camera entity approaches cloud level
+	 * diminished when the given y value approaches cloud level
 	 * Above cloud level, the return value will always be 0.0 (no rain)
 	 *
 	 * @param world     The world
+	 * @param y The y position to check
 	 * @param tickProgress The current tick delta
 	 * @return the rain gradient from 0.0-1.0
 	 */
-	public static float getRainGradient(World world, float tickProgress) {
-		return HeadInTheClouds.getRainGradient(world, world.getRainGradient(tickProgress));
+	public static float getRainGradient(World world, float y, float tickProgress) {
+		return HeadInTheClouds.getRainGradient(world, y, world.getRainGradient(tickProgress));
 	}
 
 	/**

@@ -6,7 +6,9 @@
   "mixins": [
     "WorldMixin"
   ],
-  "client": [],
+  "client": [
+    "client.WorldMixinClient"
+  ],
   "injectors": {
     "defaultRequire": 1
   }
