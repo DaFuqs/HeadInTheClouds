@@ -38,5 +38,4 @@ public class HeadInTheCloudsAPI {
 		Optional<Integer> cloudY = HeadInTheClouds.getCloudHeight(world);
 		return cloudY.isPresent() && cloudY.get() > pos.getY();
 	}
-
 }
