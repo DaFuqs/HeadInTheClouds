@@ -1,24 +1,25 @@
 package de.dafuqs.head_in_the_clouds;
 
-import net.minecraft.world.World;
-
-import java.util.Optional;
+import net.minecraft.client.renderer.*;
+import net.minecraft.core.*;
+import net.minecraft.util.*;
+import net.minecraft.world.attribute.*;
+import net.minecraft.world.level.*;
 
 public class HeadInTheClouds {
     private static final double ADDITIONAL_CLOUD_HEIGHT = 3.0;
     private static final double GRADIENT_HEIGHT = 6.0;
     private static final double INVERTED_GRADIENT_HEIGHT = 1.0 / GRADIENT_HEIGHT;
-
-    public static Optional<Integer> getCloudHeight(World world) {
-        return world.getDimension().cloudHeight();
+    
+    public static float getCloudHeight(Level level, BlockPos pos) {
+        return level.environmentAttributes().getValue(EnvironmentAttributes.CLOUD_HEIGHT, pos);
     }
+    
+    public static float getRainGradient(Level world, BlockPos pos, float original) {
+        float cloudY = HeadInTheClouds.getCloudHeight(world, pos);
 
-    public static float getRainGradient(World world, double y, float original) {
-        Optional<Integer> cloudY = HeadInTheClouds.getCloudHeight(world);
-        if (cloudY.isEmpty())
-            return original;
-
-        double maxY = cloudY.get() + ADDITIONAL_CLOUD_HEIGHT;
+        int y = pos.getY();
+        double maxY = cloudY + ADDITIONAL_CLOUD_HEIGHT;
         if (y < maxY - GRADIENT_HEIGHT) {
             // no override here
             return original;

@@ -4,12 +4,12 @@
   "package": "de.dafuqs.head_in_the_clouds.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "WorldMixin"
-  ],
-  "client": [
-    "client.WorldMixinClient"
+    "LevelMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "client": [
+    "client.LevelMixinClient"
+  ]
 }
