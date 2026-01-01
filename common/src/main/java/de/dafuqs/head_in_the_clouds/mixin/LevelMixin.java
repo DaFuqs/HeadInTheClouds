@@ -5,10 +5,12 @@ import de.dafuqs.head_in_the_clouds.*;
 import de.dafuqs.head_in_the_clouds.api.HeadInTheCloudsAPI;
 import net.minecraft.client.*;
 import net.minecraft.core.*;
+import net.minecraft.server.level.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.biome.*;
-import org.spongepowered.asm.mixin.Mixin;
+import net.minecraft.world.level.block.*;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -22,4 +24,19 @@ public abstract class LevelMixin {
             cir.setReturnValue(Biome.Precipitation.NONE);
         }
     }
+    
+    @Shadow
+    public abstract boolean isClientSide();
+    
+    @ModifyReturnValue(method = "getRainLevel", at = @At("RETURN"))
+    public float headInTheClouds$getRainLevel(float original) {
+        if(this.isClientSide()) {
+            Entity e = Minecraft.getInstance().getCameraEntity();
+            if (e != null) {
+                return HeadInTheClouds.getRainGradient((Level) (Object) this, e.position(), original);
+            }
+        }
+        return original;
+    }
+    
 }

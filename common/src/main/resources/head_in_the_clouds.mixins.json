@@ -9,7 +9,5 @@
   "injectors": {
     "defaultRequire": 1
   },
-  "client": [
-    "client.LevelMixinClient"
-  ]
+  "client": []
 }

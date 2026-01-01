@@ -4,6 +4,7 @@ import de.dafuqs.head_in_the_clouds.*;
 import net.minecraft.core.*;
 import net.minecraft.world.*;
 import net.minecraft.world.level.*;
+import net.minecraft.world.phys.*;
 
 import java.util.*;
 
@@ -20,7 +21,7 @@ public class HeadInTheCloudsAPI {
 	 * @param tickProgress The current tick delta
 	 * @return the rain gradient from 0.0 (no rain) to 1.0 (full rain)
 	 */
-	public static float getRainGradient(Level level, BlockPos pos, float tickProgress) {
+	public static float getRainGradient(Level level, Vec3 pos, float tickProgress) {
 		return HeadInTheClouds.getRainGradient(level, pos, level.getRainLevel(tickProgress));
 	}
 
@@ -36,7 +37,7 @@ public class HeadInTheCloudsAPI {
 	 * @return If it can possibly rain/snow at the given pos
 	 */
 	public static boolean allowRainAtPos(Level level, BlockPos pos) {
-		float cloudY = HeadInTheClouds.getCloudHeight(level, pos);
-		return cloudY > pos.getY();
+		float cloudY = HeadInTheClouds.getCloudHeight(level, pos.getCenter());
+		return pos.getY() < cloudY;
 	}
 }
