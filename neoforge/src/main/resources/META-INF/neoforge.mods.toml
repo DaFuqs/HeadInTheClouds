@@ -1,5 +1,3 @@
-modLoader = "lowcodefml"
-loaderVersion = "[1.0,)"
 issueTrackerURL = "https://github.com/DaFuqs/HeadInTheClouds/issues"
 license = "GPL-3.0-or-later"
 
