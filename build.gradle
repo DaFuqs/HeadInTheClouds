@@ -1,96 +1,81 @@
 plugins {
-    // https://github.com/architectury/architectury-api
-    id 'dev.architectury.loom' version '1.13-SNAPSHOT' apply false
-    id 'architectury-plugin' version '3.4-SNAPSHOT'
-    id 'com.gradleup.shadow' version '8.3.+' apply false
+    id 'net.neoforged.gradle.userdev' version '7.1.21'
+    id 'maven-publish'
+    id 'idea'
 }
 
-architectury {
-    minecraft = project.minecraft_version
+version = mod_version
+group = mod_group_id
+
+repositories {
+
 }
 
-allprojects {
-    version = rootProject.mod_version
-    group = rootProject.maven_group
+base {
+    archivesName = archives_base_name
 }
 
-subprojects {
-    apply plugin: 'dev.architectury.loom'
-    apply plugin: 'architectury-plugin'
-    apply plugin: 'maven-publish'
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
-    base {
-        archivesName = "$rootProject.mod_id-$project.name"
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
+
+runs {
+    configureEach {
+        systemProperty 'forge.logging.markers', 'REGISTRIES'
+        systemProperty 'forge.logging.console.level', 'debug'
+
+        systemProperty 'terminal.jline', 'true'
+
+        systemProperty 'mixin.debug.export', 'true'
+        systemProperty 'mixin.debug.verbose', 'true'
+
+        modSource project.sourceSets.main
     }
 
-    loom {
-        runs {
-            client {
-                property 'mixin.debug.export', 'true'
-            }
-        }
+    client {
+        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
     }
 
-    repositories {
-        maven { url "https://maven.shedaniel.me/" }
-        maven { url "https://maven.terraformersmc.com" }
-
-        exclusiveContent {
-            forRepository {
-                maven {
-                    name = "Modrinth"
-                    url = "https://api.modrinth.com/maven"
-                }
-            }
-            filter {
-                includeGroup "maven.modrinth"
-            }
-        }
+    server {
+        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        argument '--nogui'
     }
+}
 
-    dependencies {
-        minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
-        mappings loom.officialMojangMappings()
+dependencies {
+    implementation "net.neoforged:neoforge:${neoforge_version}"
+}
+
+// This block of code expands all declared replace properties in the specified resource targets.
+// A missing property will result in an error. Properties are expanded using ${} Groovy notation.
+tasks.withType(ProcessResources).configureEach {
+    var replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            neoforge_version       : neoforge_version,
+            neoforge_version_range : neoforge_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            mod_description        : mod_description,
+            issue_tracker_url      : issue_tracker_url,
+            display_url            : display_url
+    ]
+    inputs.properties replaceProperties
+
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expand replaceProperties
     }
+}
 
-    java {
-        withSourcesJar()
-        sourceCompatibility = targetCompatibility = JavaVersion.VERSION_21
-    }
-
-    tasks.withType(JavaCompile).configureEach {
-        it.options.release = 21
-    }
-
-    jar {
-        from("LICENSE") {
-            rename { "${it}_${rootProject.mod_id}" }
-        }
-    }
-
-    processResources {
-        def props = [
-                version: project.version, minecraft_version: project.minecraft_version,
-                description: project.mod_description, display_name: project.display_name, mod_id: project.mod_id
-        ]
-        inputs.properties props
-        filteringCharset "UTF-8"
-
-        filesMatching(["fabric.mod.json", "META-INF/neoforge.mods.toml"]) {
-            expand props
-        }
-    }
-
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                artifactId = base.archivesName.get()
-                from components.java
-            }
-        }
-
-        // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-        repositories {
-        }
+// IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
     }
 }

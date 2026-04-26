@@ -1,15 +1,17 @@
-issueTrackerURL = "https://github.com/DaFuqs/HeadInTheClouds/issues"
-license = "GPL-3.0-or-later"
+license = "${mod_license}"
+issueTrackerURL = "${issue_tracker_url}"
+displayURL = "${display_url}"
 
 [[mods]]
 modId = "${mod_id}"
-version = "${version}"
-displayName = "${display_name}"
-authors = "DaFuqs"
-description = '''
-${description}
-'''
+version = "${mod_version}"
+displayName = "${mod_name}"
+authors = "${mod_authors}"
 logoFile = "assets/${mod_id}/icon.png"
+description = '''${mod_description}'''
+
+[[mixins]]
+config = "${mod_id}.mixins.json"
 
 [[dependencies.${mod_id}]]
 modId = "neoforge"
@@ -24,6 +26,3 @@ type = "required"
 versionRange = "[1.21.11,)"
 ordering = "NONE"
 side = "BOTH"
-
-[[mixins]]
-config = "${mod_id}.mixins.json"
