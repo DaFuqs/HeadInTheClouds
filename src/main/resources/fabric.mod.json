@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "${mod_id}",
+  "id": "head_in_the_clouds",
   "version": "${version}",
-  "name": "${display_name}",
-  "description": "${description}",
+  "name": "Head in the Clouds",
+  "description": "Make it not rain over the cloud level",
   "authors": [
     "DaFuqs"
   ],
@@ -12,13 +12,13 @@
     "issues": "https://github.com/DaFuqs/HeadInTheClouds/issues"
   },
   "license": "GPL-3.0-or-later",
-  "icon": "assets/${mod_id}/icon.png",
+  "icon": "assets/head_in_the_clouds/icon.png",
   "environment": "client",
   "mixins": [
-    "${mod_id}.mixins.json"
+    "head_in_the_clouds.mixins.json"
   ],
   "depends": {
-    "minecraft": ">=1.21.11",
+    "minecraft": ">=${minecraft_version}",
     "fabricloader": "*"
   }
 }

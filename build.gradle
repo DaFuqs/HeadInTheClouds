@@ -1,96 +1,63 @@
 plugins {
-    // https://github.com/architectury/architectury-api
-    id 'dev.architectury.loom' version '1.13-SNAPSHOT' apply false
-    id 'architectury-plugin' version '3.4-SNAPSHOT'
-    id 'com.gradleup.shadow' version '8.3.+' apply false
+    id 'net.fabricmc.fabric-loom' version "${loom_version}"
+    id 'maven-publish'
 }
 
-architectury {
-    minecraft = project.minecraft_version
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
 }
 
-allprojects {
-    version = rootProject.mod_version
-    group = rootProject.maven_group
+repositories {
+
 }
 
-subprojects {
-    apply plugin: 'dev.architectury.loom'
-    apply plugin: 'architectury-plugin'
-    apply plugin: 'maven-publish'
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+}
 
-    base {
-        archivesName = "$rootProject.mod_id-$project.name"
+processResources {
+    inputs.property "version", project.version
+    inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "loader_version", project.loader_version
+    filteringCharset "UTF-8"
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version,
+                "minecraft_version": project.minecraft_version,
+                "loader_version": project.loader_version
     }
+}
 
-    loom {
-        runs {
-            client {
-                property 'mixin.debug.export', 'true'
-            }
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 25
+}
+
+java {
+    withSourcesJar()
+
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+}
+
+jar {
+    inputs.property "archivesName", project.base.archivesName
+
+    from("LICENSE") {
+        rename { "${it}_${inputs.properties.archivesName}" }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
         }
     }
 
     repositories {
-        maven { url "https://maven.shedaniel.me/" }
-        maven { url "https://maven.terraformersmc.com" }
-
-        exclusiveContent {
-            forRepository {
-                maven {
-                    name = "Modrinth"
-                    url = "https://api.modrinth.com/maven"
-                }
-            }
-            filter {
-                includeGroup "maven.modrinth"
-            }
-        }
-    }
-
-    dependencies {
-        minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
-        mappings loom.officialMojangMappings()
-    }
-
-    java {
-        withSourcesJar()
-        sourceCompatibility = targetCompatibility = JavaVersion.VERSION_21
-    }
-
-    tasks.withType(JavaCompile).configureEach {
-        it.options.release = 21
-    }
-
-    jar {
-        from("LICENSE") {
-            rename { "${it}_${rootProject.mod_id}" }
-        }
-    }
-
-    processResources {
-        def props = [
-                version: project.version, minecraft_version: project.minecraft_version,
-                description: project.mod_description, display_name: project.display_name, mod_id: project.mod_id
-        ]
-        inputs.properties props
-        filteringCharset "UTF-8"
-
-        filesMatching(["fabric.mod.json", "META-INF/neoforge.mods.toml"]) {
-            expand props
-        }
-    }
-
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                artifactId = base.archivesName.get()
-                from components.java
-            }
-        }
-
-        // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-        repositories {
-        }
     }
 }
