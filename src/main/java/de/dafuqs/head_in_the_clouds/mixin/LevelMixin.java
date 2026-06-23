@@ -2,18 +2,10 @@ package de.dafuqs.head_in_the_clouds.mixin;
 
 import com.llamalad7.mixinextras.injector.*;
 import de.dafuqs.head_in_the_clouds.*;
-import de.dafuqs.head_in_the_clouds.api.HeadInTheCloudsAPI;
-import net.minecraft.client.*;
-import net.minecraft.core.*;
-import net.minecraft.server.level.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.level.*;
-import net.minecraft.world.level.biome.*;
-import net.minecraft.world.level.block.*;
+import de.dafuqs.head_in_the_clouds.api.*;
 import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.*;
 
 @Mixin(Level.class)
 public abstract class LevelMixin {

@@ -1,12 +1,7 @@
 package de.dafuqs.head_in_the_clouds.api;
 
 import de.dafuqs.head_in_the_clouds.*;
-import net.minecraft.core.*;
-import net.minecraft.world.*;
-import net.minecraft.world.level.*;
 import net.minecraft.world.phys.*;
-
-import java.util.*;
 
 public class HeadInTheCloudsAPI {
 
