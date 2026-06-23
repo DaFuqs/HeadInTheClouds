@@ -37,7 +37,7 @@ public class HeadInTheCloudsAPI {
 	 * @return If it can possibly rain/snow at the given pos
 	 */
 	public static boolean allowRainAtPos(Level level, BlockPos pos) {
-		float cloudY = HeadInTheClouds.getCloudHeight(level, pos.getCenter());
+		float cloudY = HeadInTheClouds.getCloudHeight(level, Vec3.atCenterOf(pos));
 		return pos.getY() < cloudY;
 	}
 }
