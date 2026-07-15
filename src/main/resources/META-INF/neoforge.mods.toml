@@ -1,6 +1,5 @@
 license = "${mod_license}"
 issueTrackerURL = "${issue_tracker_url}"
-displayURL = "${display_url}"
 
 [[mods]]
 modId = "${mod_id}"
@@ -9,18 +8,19 @@ displayName = "${mod_name}"
 authors = "${mod_authors}"
 logoFile = "assets/${mod_id}/icon.png"
 description = '''${mod_description}'''
+displayURL = "${display_url}"
 
 [[mixins]]
 config = "${mod_id}.mixins.json"
 
-[[dependencies.${mod_id}]]
+[[dependencies."${mod_id}"]]
 modId = "neoforge"
 type = "required"
 versionRange = "${neoforge_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.${mod_id}]]
+[[dependencies."${mod_id}"]]
 modId = "minecraft"
 type = "required"
 versionRange = "${minecraft_version_range}"
