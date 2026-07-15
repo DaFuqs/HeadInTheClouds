@@ -1,5 +1,7 @@
 package de.dafuqs.head_in_the_clouds;
 
+import net.minecraft.world.attribute.*;
+import net.minecraft.world.level.*;
 import net.minecraft.world.phys.*;
 
 public class HeadInTheClouds {
